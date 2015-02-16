@@ -55,27 +55,30 @@ func (s *sub) sender() {
 
 func (s *sub) receiver(ep mangos.Endpoint) {
 	for {
-		var matched = false
 
 		m := ep.RecvMsg()
 		if m == nil {
 			return
 		}
 
-		s.Lock()
-		for _, sub := range s.subs {
-			if bytes.HasPrefix(m.Body, sub) {
-				// Matched, send it up.  Best effort.
-				matched = true
-				break
-			}
-		}
-		s.Unlock()
+		/*
+			var matched = false
 
-		if !matched {
-			m.Free()
-			continue
-		}
+			s.Lock()
+			for _, sub := range s.subs {
+				if bytes.HasPrefix(m.Body, sub) {
+					// Matched, send it up.  Best effort.
+					matched = true
+					break
+				}
+			}
+			s.Unlock()
+
+			if !matched {
+				m.Free()
+				continue
+			}
+		*/
 
 		select {
 		case s.sock.RecvChannel() <- m:

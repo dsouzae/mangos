@@ -86,6 +86,12 @@ func (d *dialer) Dial() (mangos.Pipe, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// XXX: tunable
+	conn.SetReadBuffer(512 * 1024 * 1024)
+	conn.SetWriteBuffer(512 * 1024 * 1024)
+	// XXX: end tunable
+
 	if err = configure(conn, d.opts); err != nil {
 		conn.Close()
 		return nil, err

@@ -21,7 +21,8 @@ import (
 )
 
 // defaultQLen is the default length of the upper read/write queues.
-const defaultQLen = 128
+//const defaultQLen = 128
+const defaultQLen = 1024 * 1024
 
 // socket is the meaty part of the core information.
 type socket struct {
@@ -190,9 +191,9 @@ func (sock *socket) SendMsg(msg *Message) error {
 			return nil
 		}
 	}
-	sock.Lock()
+	//sock.Lock()
 	timeout := mkTimer(sock.wdeadline)
-	sock.Unlock()
+	//sock.Unlock()
 	select {
 	case <-timeout:
 		return ErrSendTimeout
@@ -209,9 +210,9 @@ func (sock *socket) Send(b []byte) error {
 }
 
 func (sock *socket) RecvMsg() (*Message, error) {
-	sock.Lock()
+	//sock.Lock()
 	timeout := mkTimer(sock.rdeadline)
-	sock.Unlock()
+	//sock.Unlock()
 
 	for {
 		select {

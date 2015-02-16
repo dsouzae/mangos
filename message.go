@@ -39,11 +39,11 @@ type msgCacheInfo struct {
 
 // We can tweak these!
 var messageCache = []msgCacheInfo{
-	{maxbody: 64, cache: make(chan *Message, 2048)},   // 128K
-	{maxbody: 128, cache: make(chan *Message, 1024)},  // 128K
-	{maxbody: 1024, cache: make(chan *Message, 1024)}, // 1 MB
-	{maxbody: 8192, cache: make(chan *Message, 256)},  // 2 MB
-	{maxbody: 65536, cache: make(chan *Message, 64)},  // 4 MB
+	{maxbody: 64, cache: make(chan *Message, 20480)},        // 128K
+	{maxbody: 128, cache: make(chan *Message, 2*1024*1024)}, // 1280K
+	{maxbody: 1024, cache: make(chan *Message, 20480)},      // 1 MB
+	{maxbody: 8192, cache: make(chan *Message, 256)},        // 2 MB
+	{maxbody: 65536, cache: make(chan *Message, 64)},        // 4 MB
 }
 
 // Free decrements the reference count on a message, and releases its
